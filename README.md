@@ -8,8 +8,9 @@ graph/ => import csv log to neo4j database
 SELECT *
 FROM dns_query_log
 INTO OUTFILE '/tmp/dns_query_log.csv'
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
+ESCAPED BY '"'
 LINES TERMINATED BY '\n';
 ```
 
@@ -19,7 +20,8 @@ LINES TERMINATED BY '\n';
 SELECT *
 FROM virustotal_db
 INTO OUTFILE '/tmp/virustotal_db.csv'
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
+ESCAPED BY '"'
 LINES TERMINATED BY '\n';
 ```
