@@ -3,7 +3,30 @@
 convert DNS log to neo4j import csv file
 */
 
-$file = fopen("dns.csv","r") or die("Can't open file");
+function degree($domain) {
+    $level = 5;
+    $a = explode(".", $domain);   
+    $count = count($a);
+    $tmp = '';
+    
+    $res = array();
+    
+    for($i = $count-1; $i >= 0; $i--) {
+    
+        $tmp = ($tmp == '') ? $a[$i] : $a[$i] . "." .$tmp;
+        $res[] = $tmp;
+        
+        if(($count - $i) == $level) {
+            break;
+        }
+    }   
+
+    return $res;
+}
+
+
+
+$file = fopen("dns_query_log.csv","r") or die("Can't open file");
 
 $ip_node = array();
 $domain_node = array();
@@ -23,7 +46,15 @@ while(!feof($file))  {
     }
     
     if(!isset($domain_node[$domain])) {
-        $domain_node[$domain] = $date;
+        $tmp = degree($domain);
+        
+        $lv1 = isset($tmp[0]) ? $tmp[0] : null;
+        $lv2 = isset($tmp[1]) ? $tmp[1] : null;
+        $lv3 = isset($tmp[2]) ? $tmp[2] : null;
+        $lv4 = isset($tmp[3]) ? $tmp[3] : null;
+        $lv5 = isset($tmp[4]) ? $tmp[4] : null;
+        
+        $domain_node[$domain] = "{$date}, {$lv1}, {$lv2}, {$lv3}, {$lv4}, {$lv5},";
     }    
     
     if(!isset($relationship["$domain,$ip"])) {
