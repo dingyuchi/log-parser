@@ -54,7 +54,7 @@ while(!feof($file))  {
         $lv4 = isset($tmp[3]) ? $tmp[3] : null;
         $lv5 = isset($tmp[4]) ? $tmp[4] : null;
         
-        $domain_node[$domain] = "{$date}, {$lv1}, {$lv2}, {$lv3}, {$lv4}, {$lv5},";
+        $domain_node[$domain] = "{$date},{$lv1},{$lv2},{$lv3},{$lv4},{$lv5},";
     }    
     
     if(!isset($relationship["$domain,$ip"])) {
